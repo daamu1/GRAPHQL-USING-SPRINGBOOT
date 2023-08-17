@@ -1,35 +1,33 @@
 package com.saurabh.service.implementation;
 
 import com.saurabh.model.Book;
-import com.saurabh.repo.BookRepo;
+import com.saurabh.repo.BookRepository;
 import com.saurabh.service.BookService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 @AllArgsConstructor
 public class BookServiceimpl implements BookService {
-    private  final BookRepo bookRepo;
+    private final BookRepository bookRepository;
+
     @Override
-    public Book create(Book book) {
-        return this.bookRepo.save(book);
+    public Book addNewBookDetails(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
-    public List<Book> getAll() {
-        return this.bookRepo.findAll();
+    public List<Book> getAllBookDetails() {
+        return bookRepository.findAll();
     }
 
     @Override
-    public Book getOne(int bookId) {
-        Optional<Book> bookOptional = this.bookRepo.findById(bookId);
-        if (bookOptional.isEmpty()) {
-            throw new RuntimeException("This book is not available at the store!!");
-        }
-        return bookOptional.get();
+    public Book getBookDetailsByBookId(int bookId) {
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        return bookOptional.orElseThrow(() -> new RuntimeException("Book not found with ID: " + bookId));
     }
-
 }
+

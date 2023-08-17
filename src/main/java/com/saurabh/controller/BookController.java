@@ -17,22 +17,24 @@ public class BookController {
 
     @MutationMapping("createBook")
     public Book createBook(@Argument BookInput bookInput) {
-        Book book=new Book();
-        book.setPages(bookInput.getPages());
-        book.setTitle(bookInput.getTitle());
-        book.setDescription(bookInput.getDescription());
-        book.setAuthor(bookInput.getAuthor());
-        book.setPrice(bookInput.getPrice());
-        return bookService.create(book);
+        Book book = Book.builder()
+                .pages(bookInput.getPages())
+                .title(bookInput.getTitle())
+                .description(bookInput.getDescription())
+                .author(bookInput.getAuthor())
+                .price(bookInput.getPrice())
+                .build();
+        return bookService.addNewBookDetails(book);
     }
+
 
     @QueryMapping
     public List<Book> getAllBooks() {
-        return bookService.getAll();
+        return bookService.getAllBookDetails();
     }
 
     @QueryMapping
     public Book getBookById(@Argument("bookId") int bookId) {
-        return bookService.getOne(bookId);
+        return bookService.getBookDetailsByBookId(bookId);
     }
 }
