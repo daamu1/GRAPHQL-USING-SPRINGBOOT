@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class BookServiceimpl implements BookService {
+public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     @Override
